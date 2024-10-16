@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Calculator with Copy</title>
+</head>
+<body>
+<!-- FAQ Section Start -->
+
+<style>
+    /* FAQ Container Styling */
+    .faq-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+    }
+
+    /* FAQ Header */
+    .faq-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .faq-header h1 {
+        font-size: 2.5rem;
+        color: #343a40;
+    }
+
+    /* FAQ Item Styling */
+    .faq-item {
+        border-bottom: 1px solid #ccc;
+        padding: 15px 0;
+    }
+
+    .faq-question {
+        font-size: 1.2rem;
+        font-weight: bold;
+        cursor: pointer;
+        position: relative;
+        padding-right: 20px;
+    }
+
+    .faq-question::after {
+        content: '+';
+        position: absolute;
+        right: 0;
+        top: 0;
+        font-size: 1.2rem;
+        transition: transform 0.3s;
+    }
+
+    .faq-question.active::after {
+        content: '-';
+        transform: rotate(180deg);
+    }
+
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        font-size: 1rem;
+        color: #495057;
+    }
+
+    .faq-answer p,
+    .faq-answer ul,
+    .faq-answer ol,
+    .faq-answer table {
+        margin: 10px 0;
+    }
+
+    /* Styling for tables */
+    .pricing-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    .pricing-table th, .pricing-table td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .pricing-table th {
+        background-color: #343a40;
+        color: #ffffff;
+    }
+
+    .pricing-table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    /* Link Styling */
+    .faq-link {
+        color: #0d6efd;
+        text-decoration: none;
+    }
+
+    .faq-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="faq-container">
+    <div class="faq-header">
+        <h1>常見問題 (FAQ)</h1>
+    </div>
+    <div id="faqList">
+        <!-- FAQs will be dynamically injected here -->
+    </div>
+</div>
+
+<script>
+    // Define the FAQ class
+    class FAQ {
+        constructor(containerId) {
+            this.container = document.getElementById(containerId);
+            this.faqData = [];
+        }
+
+        // Method to add a new FAQ
+        addFAQ(question, answer) {
+            this.faqData.push({ question, answer });
+        }
+
+        // Method to render all FAQs
+        render() {
+            this.faqData.forEach((faq, index) => {
+                const faqItem = this.createFAQItem(faq, index);
+                this.container.appendChild(faqItem);
+            });
+        }
+
+        // Helper method to create a single FAQ item
+        createFAQItem(faq, index) {
+            const faqItem = document.createElement('div');
+            faqItem.className = 'faq-item';
+
+            const question = document.createElement('div');
+            question.className = 'faq-question';
+            question.textContent = faq.question;
+            question.addEventListener('click', () => {
+                question.classList.toggle('active');
+                const answer = faqItem.querySelector('.faq-answer');
+                if (answer.style.maxHeight) {
+                    answer.style.maxHeight = null;
+                } else {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                }
+            });
+
+            const answer = document.createElement('div');
+            answer.className = 'faq-answer';
+            answer.innerHTML = faq.answer;
+
+            faqItem.appendChild(question);
+            faqItem.appendChild(answer);
+
+            return faqItem;
+        }
+    }
+
+    // Initialize the FAQ once the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        const faq = new FAQ('faqList');
+
+        // Add FAQs
+        faq.addFAQ('價錢是多少？', `
+            <h5>琺瑯壁板每公分價格：</h5>
+            <table class="pricing-table">
+                <thead>
+                    <tr>
+                        <th>類型</th>
+                        <th>寬度</th>
+                        <th>每公分價格</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>類型1</td>
+                        <td>120公分</td>
+                        <td>$80</td>
+                    </tr>
+                    <tr>
+                        <td>類型2</td>
+                        <td>60公分</td>
+                        <td>$60</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h5>運費列表：</h5>
+            <table class="pricing-table">
+                <thead>
+                    <tr>
+                        <th>地區</th>
+                        <th>運費</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>臺北/新北</td>
+                        <td>$3,000</td>
+                    </tr>
+                    <tr>
+                        <td>桃園</td>
+                        <td>$3,500</td>
+                    </tr>
+                    <tr>
+                        <td>新竹</td>
+                        <td>$4,500</td>
+                    </tr>
+                    <tr>
+                        <td>臺中/苗栗</td>
+                        <td>$5,000</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h5>工費：</h5>
+            <p>工費一律$5,000，包含安裝費、開孔費，不會額外收取停車費、樓梯電梯費、切割費。</p>
+        `);
+
+        faq.addFAQ('你們哪裡不一樣？', `
+            <h5>我們品牌：Polyvision</h5>
+            <ul>
+                <li>尺寸：120cm高 * 無限長</li>
+                <li>厚度：0.4mm</li>
+            </ul>
+            <h5>別家品牌：</h5>
+            <ul>
+                <li><strong>Polyvision</strong>：270cm高 * 120cm長，厚度0.4mm</li>
+                <li><strong>JFE</strong>：240cm高 * 89cm長，厚度0.5mm</li>
+                <li><strong>Hiceral</strong>：210cm高 * 90cm長，厚度1mm</li>
+                <li><strong>TAKARA</strong>：270cm高 * 90cm長，厚度0.8 ~ 1.3mm</li>
+            </ul>
+        `);
+
+        faq.addFAQ('你們真的是無限長嗎？', `
+            <p>對，我們的琺瑯壁板是從整捲100多米長的材料裁切而成，唯一的限制是高度為120cm。</p>
+        `);
+
+        faq.addFAQ('安裝服務特點：', `
+            <ol>
+                <li><strong>薄型設計</strong>：琺瑯壁板的厚度僅有0.4mm，可以將120cm高、10米長的板子捲成50公分長、50公分寬、120公分高，不會佔用太多空間，適合各種施工環境。</li>
+                <li><strong>靈活安裝</strong>：我們的安裝服務可以在狹小空間內進行，不需要額外的施工空間。</li>
+                <li><strong>快速施工</strong>：由於不需要大量的施工空間，我們的安裝過程可以更快速地完成，減少對您的生活影響。</li>
+            </ol>
+        `);
+
+        faq.addFAQ('如何報價琺瑯壁板安裝？', `
+            <p>琺瑯壁板價格如下：</p>
+            <ul>
+                <li>長度無限制，寬120公分，每公分$80</li>
+                <li>長度無限制，寬60公分，每公分$60</li>
+                <li>工費一律$5,000</li>
+            </ul>
+            <p>運費依地區而定：</p>
+            <ul>
+                <li>臺北/新北：$3,000</li>
+                <li>桃園：$3,500</li>
+                <li>新竹：$4,500</li>
+                <li>臺中/苗栗：$5,000</li>
+            </ul>
+            <p>我們的報價包含材料費、安裝費、開孔的費用。</p>
+        `);
+
+        faq.addFAQ('是否有不同顏色的選擇？', `
+            <p>目前只有白色供應，其他顏色需等到10月中供應。提前預訂的顏色按白色價格計算。到貨的其他顏色可能價格會高於$80。</p>
+            <p>可選顏色有：</p>
+            <ul>
+                <li>灰色</li>
+                <li>米白</li>
+                <li>霧面白</li>
+                <li>粉紅色</li>
+                <li>天空藍</li>
+                <li>芥末綠</li>
+                <li>亮面黑</li>
+            </ul>
+        `);
+
+        faq.addFAQ('如何聯繫你們？', `
+            <p>您可以在我們的<a href="https://www.facebook.com/Mr.Kitchen.Taiwan.Polyvision/" class="faq-link" target="_blank">Facebook</a>上留言，我們會盡快回覆您。</p>
+        `);
+
+        faq.addFAQ('哪些牆面可以施工？', `
+            <p>只要墻面平整且無粉底，任何位置都可以安裝，例如：</p>
+            <ul>
+                <li>磁磚面</li>
+                <li>木工板打底</li>
+                <li>烤漆玻璃</li>
+                <li>櫃體上</li>
+            </ul>
+        `);
+
+        faq.addFAQ('如果已經完成廚房裝修，你們還能安裝嗎？', `
+            <p>當然可以。我們使用鐳射切割技術，能精準切割板材邊緣，無需額外的邊條處理，且不會出現接縫問題。</p>
+        `);
+
+        faq.addFAQ('琺瑯壁板會泛黃或因氣候變化鼓起嗎？', `
+            <p>琺瑯壁板不會泛黃，我們提供10年保固，並保證不會因氣候變化而鼓起或爆裂。5年保固不脫落。請勿使用強腐蝕性清潔劑，只需用清水和抹布清潔。</p>
+        `);
+
+        faq.addFAQ('琺瑯壁板可以貼在烤漆玻璃上嗎？', `
+            <p>可以，琺瑯壁板厚度僅0.4mm，貼在烤漆玻璃上不會占用過多空間，但安裝後無法再拆除。價錢包含連工帶料、開孔和收邊條。</p>
+        `);
+
+        faq.addFAQ('施工時會很大聲嗎？', `
+            <p>不會，因為琺瑯壁板會在工廠提前切割完成，不需要在當天進行現場切割。</p>
+        `);
+
+        faq.addFAQ('你們有賣配件嗎？', `
+            <p>有，我們的配件可在我們的<a href="https://www.mrkitchen.com.tw/shop/" class="faq-link" target="_blank">網站</a>訂購。</p>
+        `);
+
+        faq.addFAQ('你們有實體店面嗎？', `
+            <p>我們的店面是預約制，為了確保每位客人可以獲得最佳服務，請通過<a href="https://www.facebook.com/Mr.Kitchen.Taiwan.Polyvision/" class="faq-link" target="_blank">Facebook</a>聯繫我們預約訪問。</p>
+        `);
+
+        faq.addFAQ('琺瑯板是什麼？', `
+            <p>琺瑯板是由金屬和玻璃質釉料經高溫燒製而成，具有耐刮、耐髒、耐高溫的特性，無磁性且無揮發性污染。</p>
+        `);
+
+        faq.addFAQ('磁吸力強嗎？', `
+            <p>琺瑯板本身無磁性，但可搭配附有磁性的配件使用。</p>
+        `);
+        faq.addFAQ('門框、窗框可以貼琺瑯壁板嗎？', `
+        <p>可以，但門框和窗框的施工費用會另行計算，並依據收邊條的需求數量做額外增費。</p>
+        `);
+
+
+        // Render all FAQs
+        faq.render();
+    });
+</script>
+</body>
+
+<!-- FAQ Section End -->
