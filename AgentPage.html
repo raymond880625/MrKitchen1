@@ -156,6 +156,7 @@
                     numbers = [50, 50];
                 }
             }
+        
 
             // Calculate based on selected option
             let output;
@@ -165,7 +166,7 @@
                 output = calculateFinancialsB(numbers);  // Apply B logic (30%, 20%, 50%)
             } else if (select === "C") {
                 output = calculateFinancialsC(numbers);  // Apply C logic (50%, 50%)
-
+            }
             document.getElementById("PercentResult").textContent = output;
         }
 
