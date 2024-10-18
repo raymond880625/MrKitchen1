@@ -66,6 +66,13 @@
         <button id="copyButton" onclick="copyToClipboard()">複製</button>
         <div id="copyMessage">複製了！</div>
     </div>
+    <!-- Calculate Rectangular Section -->
+    <div class="section">
+        <h2>矩形周長計算器</h2>
+        <label for="dimensionsInput">請輸入長度和寬度 (mm), 用逗號分隔:</label>
+        <input type="text" id="dimensionsInput" placeholder="例如：3030, 580">
+        <div id="perimeterResult" style="font-weight: bold;">周長 (meters): 0.000</div>
+    </div>
 
     <!-- Item Addition Section -->
     <div class="section">
@@ -187,6 +194,43 @@
                 message.style.display = "none";
             }, 2000);
         }
+
+        
+
+        class RectanglePerimeterCalculator {
+        constructor(dimensionsInputId, resultId) {
+            this.dimensionsInput = document.getElementById(dimensionsInputId);
+            this.resultElement = document.getElementById(resultId);
+            this.init();
+        }
+
+        // Method to parse input and calculate perimeter
+        calculatePerimeter() {
+            const inputValues = this.dimensionsInput.value.split(',').map(val => parseFloat(val.trim()));
+            if (inputValues.length === 2 && !isNaN(inputValues[0]) && !isNaN(inputValues[1])) {
+                const [lengthMm, widthMm] = inputValues;
+                const perimeterMeters = (2 * (lengthMm + widthMm)) / 1000;
+                return perimeterMeters.toFixed(3);
+            } else {
+                return "0.000";  // Default value if input is invalid
+            }
+        }
+
+        // Method to display the perimeter
+        displayPerimeter() {
+            const result = this.calculatePerimeter();
+            this.resultElement.textContent = `周長 (meters): ${result}`;
+        }
+
+        // Method to bind input event
+        init() {
+            this.dimensionsInput.addEventListener('input', () => this.displayPerimeter());
+        }
+    }
+
+    // Instantiate the calculator object
+    const rectangleCalculator = new RectanglePerimeterCalculator('dimensionsInput', 'perimeterResult');
+
 
         // Adding new items to the pricing sheet
         document.getElementById('addItem').addEventListener('click', function() {
