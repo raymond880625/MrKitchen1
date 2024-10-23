@@ -26,24 +26,40 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         /* ... other styles ... */
-    
+        table {
+            width: 100%;
+            border-collapse: collapse; /* Ensures borders between cells don't overlap */
+        }
+
+        th, td {
+            border: 1px solid #000; /* Adds solid black borders */
+            padding: 10px; /* Adds some padding for better readability */
+            text-align: left;
+        }
+
+        th {
+            background-color: #aaadad; /* Keeps header background the same color as the header */
+            color: rgb(0, 0, 0); /* Makes text in header white */
+        }
         /* Print styles */
         @media print {
             body {
-                background-color: white; /* Ensure background is white for print */
-                color: black; /* Set text color to black for readability */
+                background-color: rgb(225, 223, 223);
+                color: black;
             }
             .header {
-                background-color: #242b59 !important; /* Retain the blue header color */
-                color: white !important; /* Retain the text color */
-                -webkit-print-color-adjust: exact; /* Ensures background colors are printed */
-                print-color-adjust: exact; /* Ensures background colors are printed */
+                background-color: #242b59 !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
             .container {
-                box-shadow: none; /* Remove shadow for print */
+                box-shadow: none;
             }
             img {
-                display: none; /* Optionally hide images when printing */
+                display: block !important; /* Force display of the image when printing */
+                -webkit-print-color-adjust: exact; /* Ensures colors and images are printed */
+                print-color-adjust: exact; /* Ensures colors and images are printed */
             }
         }
     </style>    
@@ -91,15 +107,15 @@
                         <td>$3,000</td>
                     </tr>
                     <tr>
-                        <td>桃園</td>
+                        <td>桃園/中壢</td>
                         <td>$3,500</td>
                     </tr>
                     <tr>
-                        <td>新竹</td>
+                        <td>新竹/湖口/竹北/新浦</td>
                         <td>$4,500</td>
                     </tr>
                     <tr>
-                        <td>臺中/苗栗</td>
+                        <td>臺中/苗栗/彰化</td>
                         <td>$5,000</td>
                     </tr>
                 </table>
