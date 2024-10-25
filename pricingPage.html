@@ -25,8 +25,23 @@
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        /* ... other styles ... */
-    
+        table {
+            width: 100%; /* Make the table take the full width of the container */
+            border-collapse: collapse; /* Ensures borders don't double up */
+            margin: 0 auto; /* Center the table horizontally */
+        }
+
+        td, th {
+            text-align: center; /* Center content */
+            border: 1px solid #ddd; /* Add a border to table cells */
+            padding: 8px; /* Add padding for better readability */
+            width:50%;
+        }
+
+        th {
+            background-color: #f2f2f2; /* Add a background color to header cells */
+        }
+
         /* Print styles */
         @media print {
             body {
@@ -63,18 +78,15 @@
                 <h2>琺瑯壁板每公分價格</h2>
                 <table>
                     <tr>
-                        <th>類型</th>
                         <th>寬度</th>
                         <th>每公分價格</th>
                     </tr>
                     <tr>
-                        <td>類型1</td>
                         <td>120公分</td>
                         <td>$80</td>
                     </tr>
                     <tr>
-                        <td>類型2</td>
-                        <td>60公分</td>
+                        <td>&leq; 60公分</td>
                         <td>$60</td>
                     </tr>
                 </table>
@@ -110,6 +122,10 @@
                     <tr>
                         <th>項目</th>
                         <th>費用</th>
+                    </tr>
+                    <tr>
+                        <td>收邊條每條</td>
+                        <td>$850</td>
                     </tr>
                     <tr>
                         <td>工費一律</td>
