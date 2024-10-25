@@ -54,12 +54,24 @@
                 print-color-adjust: exact;
             }
             .container {
-                box-shadow: none;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important; /* Retain shadows during printing */
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
             img {
                 display: block !important; /* Force display of the image when printing */
                 -webkit-print-color-adjust: exact; /* Ensures colors and images are printed */
                 print-color-adjust: exact; /* Ensures colors and images are printed */
+            }
+            th, td {
+                border: 1px solid #000 !important; /* Adds solid black borders */
+                padding: 10px  !important; /* Adds some padding for better readability */
+                text-align: left;
+            }
+
+            th {
+                background-color: #aaadad !important; /* Keeps header background the same color as the header */
+                color: rgb(0, 0, 0) !important; /* Makes text in header white */
             }
         }
     </style>    
