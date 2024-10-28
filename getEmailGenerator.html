@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 20px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #output {
+            white-space: pre-wrap;
+            background-color: #f4f4f4;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>付款確認信生成器</h2>
+
+    <label for="clientName">客戶姓名</label>
+    <input type="text" id="clientName" placeholder="輸入客戶姓名">
+
+    <label for="amount">付款金額</label>
+    <input type="text" id="amount" placeholder="輸入付款金額">
+
+    <label for="product">商品</label>
+    <select id="product">
+        <option value="日式厨具">日式厨具</option>
+        <option value="琺瑯壁板">琺瑯壁板</option>
+        <option value="日式厨具 以及 琺瑯壁板">日式厨具 以及 琺瑯壁板</option>
+    </select>
+
+    <label for="date">收款日期</label>
+    <input type="date" id="date" value="">
+
+    <button onclick="generateEmail()">生成並複製</button>
+
+    <div id="output"></div>
+</div>
+
+<script>
+    document.getElementById('date').value = new Date().toISOString().split('T')[0];
+
+    function generateEmail() {
+        const clientName = document.getElementById('clientName').value;
+        const amount = document.getElementById('amount').value;
+        const product = document.getElementById('product').value;
+        const date = document.getElementById('date').value;
+
+        const message = `
+親愛的 ${clientName}，
+
+您好！
+
+我們很高興通知您，我們已收到您的付款 ${amount}，以及您的訂單已確認。以下是您的訂單詳細資訊：
+
+訂單詳細內容：
+商品： ${product}
+已付款金額： ${amount}
+收款日期： ${date}
+
+我們的團隊已開始處理您的訂單，並會在您的商品準備發貨後立即通知您。如有任何問題或需要進一步協助，請隨時與我們聯繫。
+
+感謝您對廚房先生的信任，我們期待未來能再次為您服務！
+
+廚房先生
+        `;
+        
+        document.getElementById('output').textContent = message;
+
+        // Copy to clipboard
+        const textarea = document.createElement('textarea');
+        textarea.value = message;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        alert("訊息已複製到剪貼簿！");
+    }
+</script>
+
+</body>
+</html>
